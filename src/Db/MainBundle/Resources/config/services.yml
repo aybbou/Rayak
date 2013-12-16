@@ -1,0 +1,6 @@
+parameters:
+    db.extractor.class: Db\MainBundle\Utility\KeywordsExtractor
+
+services:
+    db.extractor:
+        class: %db.extractor.class%

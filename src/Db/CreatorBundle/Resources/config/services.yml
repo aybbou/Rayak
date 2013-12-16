@@ -1,0 +1,7 @@
+parameters:
+    db_creator.creator.class: Db\CreatorBundle\Creator\Creator
+
+services:
+    db_creator.creator:
+        class: %db_creator.creator.class%
+        arguments: ["@doctrine.orm.entity_manager"]

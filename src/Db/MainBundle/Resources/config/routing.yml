@@ -1,0 +1,15 @@
+db_main_homepage:
+    pattern:  /
+    defaults: { _controller: DbMainBundle:Default:index }
+db_main_inventors_country:
+    pattern: /inventors/country
+    defaults: { _controller: DbMainBundle:Default:inventorsCountry }
+db_main_keywords:
+    pattern: /keywords
+    defaults: { _controller: DbMainBundle:Default:keywords }
+db_main_evolution:
+    pattern: /evolution
+    defaults: { _controller: DbMainBundle:Default:evolution }
+db_main_country_inventors:
+    pattern: /country/inventors
+    defaults: { _controller: DbMainBundle:Default:countryInventors }
