@@ -13,3 +13,9 @@ db_main_evolution:
 db_main_country_inventors:
     pattern: /country/inventors
     defaults: { _controller: DbMainBundle:Default:countryInventors }
+db_main_collab_inventors:
+    pattern: /collab/inventors
+    defaults: { _controller: DbMainBundle:Default:collabInventors }
+db_main_inventors:
+    pattern: /inventors
+    defaults: { _controller: DbMainBundle:Default:inventors }
