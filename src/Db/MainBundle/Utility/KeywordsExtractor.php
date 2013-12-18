@@ -16,7 +16,7 @@ class KeywordsExtractor {
         'at', 'be', 'that', 'many', 'on', 'from');
     private $symbols = array('.', ',', '\\', '(', ')', '/', ';', ':');
 
-    public function getKeywordsFromPatents($patents) {
+    public function getKeywordsFromPatents($patents,$n=null) {
         $data = array();
 
         foreach ($patents as $patent) {
@@ -33,10 +33,20 @@ class KeywordsExtractor {
         }
 
         arsort($data);
-
+        
+        $break=false;
+        if($n!=null && is_int($n)){
+            $break=true;
+        }
+        $c=1;
+        
         foreach ($data as $keyword => $count) {
             if ($count > 10 && !in_array($keyword, $this->notKeywords) && !is_int($keyword) && strlen($keyword) > 1) {
                 $d[] = array('keyword' => $keyword, 'count' => $count);
+                if($c==$n && $break==true){
+                    break;
+                }
+                $c++;
             }
         }
 
