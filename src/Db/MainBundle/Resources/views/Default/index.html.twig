@@ -11,23 +11,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <h2 class="well">Evolution du nombre de brevets publiés</h2>
+            <h2 class="well">Évolution du nombre de brevets publiés</h2>
             <div id="charts"></div>
         </div>
         <div class="col-md-7">
-            <h2 class="well">Les top 10 inventeurs du monde.</h2>
+            <h2 class="well">Les top 10 inventeurs du monde</h2>
             <div id="inventorsBar"></div>
         </div>
     </div>
     <div class="row">
         <h2 class="well">Les inventeurs répartis sur les pays.</h2>
         <div class="col-md-6" id="vmap" style="height: 400px;"></div>
-        <div class="col-md-6" id="countrybars"><p>Cliquez sur un pays pour voir ses top 10 inventeurs.</p></div>
+        <div class="col-md-6" id="countrybars"><p>Cliquez sur un pays pour voir ses top 10 inventeurs</p></div>
     </div>
     <div class="row">
-        <h2 class="well">Les mots-clé les plus fréquents dans tous les brevets.</h2>
+        <h2 class="well">Les mots-clés les plus fréquents dans tous les brevets</h2>
         <canvas height="600" width="1000" id="keywordsCloud"></canvas>
-        <div id="keywordsPiechart"></div>
+        <div class="well" id="keywordsPiechart"></div>
     </div>
 </div>
 {% endblock %}
@@ -71,23 +71,15 @@
             type: 'GET',
             url: '{{path('db_main_keywords')}}',
             success: function(data) {
-                var l = data.length;
-                var d = new Array();
-                for (var i = 0; i < l; i++) {
-                    d.push([data[i].keyword, parseInt(data[i].count)]);
-                }
+                var d = renderKeywords(data);
                 showKeywordsCloud(d);
             }
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_keywords')}}?n=10',
+            url: '{{path('db_main_keywords')}}?n=15',
             success: function(data) {
-                var l = data.length;
-                var d = new Array();
-                for (var i = 0; i < l; i++) {
-                    d.push([data[i].keyword, data[i].count]);
-                }
+                var d = renderKeywords(data);
                 showKeywordsPieChart(d);
             }
         });
