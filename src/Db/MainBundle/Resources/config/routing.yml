@@ -10,9 +10,6 @@ db_main_keywords:
 db_main_evolution:
     pattern: /evolution
     defaults: { _controller: DbMainBundle:Default:evolution }
-db_main_country_inventors:
-    pattern: /country/inventors
-    defaults: { _controller: DbMainBundle:Default:countryInventors }
 db_main_collab_inventors:
     pattern: /collab/inventors
     defaults: { _controller: DbMainBundle:Default:collabInventors }

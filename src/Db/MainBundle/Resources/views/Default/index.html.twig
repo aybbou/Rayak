@@ -7,6 +7,31 @@
 <link href="{{ asset('jqvmap/jqvmap.css') }}" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <h2 class="well">Evolution du nombre de brevets publiés</h2>
+            <div id="charts"></div>
+        </div>
+        <div class="col-md-7">
+            <h2 class="well">Les top 10 inventeurs du monde.</h2>
+            <div id="inventorsBar"></div>
+        </div>
+    </div>
+    <div class="row">
+        <h2 class="well">Les inventeurs répartis sur les pays.</h2>
+        <div class="col-md-6" id="vmap" style="height: 400px;"></div>
+        <div class="col-md-6" id="countrybars"><p>Cliquez sur un pays pour voir ses top 10 inventeurs.</p></div>
+    </div>
+    <div class="row">
+        <h2 class="well">Les mots-clé les plus fréquents dans tous les brevets.</h2>
+        <canvas height="600" width="1000" id="keywordsCloud"></canvas>
+        <div id="keywordsPiechart"></div>
+    </div>
+</div>
+{% endblock %}
+
 {% block javascripts %}
 {{parent()}}
 <script src="{{ asset('highcharts/js/highcharts.js') }}"></script>
@@ -82,29 +107,4 @@
         });
     }
 </script>
-{% endblock %}
-
-{% block body %}
-<div class="container">
-    <div class="row">
-    <div class="col-md-5">
-        <h2 class="well">Evolution du nombre de brevets publiés</h2>
-        <div id="charts"></div>
-    </div>
-    <div class="col-md-7">
-        <h2 class="well">Les top 10 inventeurs du monde.</h2>
-        <div id="inventorsBar"></div>
-    </div>
-        </div>
-    <div class="row">
-        <h2 class="well">Les inventeurs répartis sur les pays.</h2>
-        <div class="col-md-6" id="vmap" style="height: 400px;"></div>
-        <div class="col-md-6" id="countrybars"><p>Cliquez sur un pays pour voir les top 10 inventeurs.</p></div>
-    </div>
-    <div class="row">
-        <h2 class="well">Les mots-clé les plus fréquents dans tous les brevets.</h2>
-        <canvas class="well" height="600" width="1000" id="keywordsCloud"></canvas>
-        <div class="well" id="keywordsPiechart"></div>
-    </div>
-</div>
 {% endblock %}
