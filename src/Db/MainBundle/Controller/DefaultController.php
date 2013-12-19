@@ -23,18 +23,24 @@ class DefaultController extends Controller {
             $patents = $inventor->getPatents();
             $data[$inventor->getFullName()] = array();
             foreach ($patents as $patent) {
-                foreach ($patent->getInventors() as $inv) {
-                    if (strcmp($inv->getFullName(), $inventor->getFullName())!=0) {
-                        if (isset($data[$inventor->getFullName()][$inv->getFullName()])) {
-                            $data[$inventor->getFullName()][$inv->getFullName()] ++;
-                        } else {
-                            $data[$inventor->getFullName()][$inv->getFullName()] = 1;
+                if (count($patent->getInventors()) >= 2){
+                    foreach ($patent->getInventors() as $inv) {
+                        if (strcmp($inv->getFullName(), $inventor->getFullName()) !== 0) {
+                            if (isset($data[$inventor->getFullName()][$inv->getFullName()])) {
+                                $data[$inventor->getFullName()][$inv->getFullName()] ++;
+                            } else {
+                                if (isset($data[$inv->getFullName()][$inventor->getFullName()])) {
+                                    $data[$inv->getFullName()][$inventor->getFullName()]++;
+                                } else {
+                                    $data[$inventor->getFullName()][$inv->getFullName()] = 1;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        $d=array();
+        $d = array();
         foreach($data as $key=>$collabs){
             $c=array();
             foreach($collabs as $i=>$count){
