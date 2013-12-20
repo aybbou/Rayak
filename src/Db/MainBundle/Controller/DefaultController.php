@@ -23,18 +23,24 @@ class DefaultController extends Controller {
             $patents = $inventor->getPatents();
             $data[$inventor->getFullName()] = array();
             foreach ($patents as $patent) {
-                foreach ($patent->getInventors() as $inv) {
-                    if (strcmp($inv->getFullName(), $inventor->getFullName())!=0) {
-                        if (isset($data[$inventor->getFullName()][$inv->getFullName()])) {
-                            $data[$inventor->getFullName()][$inv->getFullName()] ++;
-                        } else {
-                            $data[$inventor->getFullName()][$inv->getFullName()] = 1;
+                if (count($patent->getInventors()) >= 2){
+                    foreach ($patent->getInventors() as $inv) {
+                        if (strcmp($inv->getFullName(), $inventor->getFullName()) !== 0) {
+                            if (isset($data[$inventor->getFullName()][$inv->getFullName()])) {
+                                $data[$inventor->getFullName()][$inv->getFullName()] ++;
+                            } else {
+                                if (isset($data[$inv->getFullName()][$inventor->getFullName()])) {
+                                    $data[$inv->getFullName()][$inventor->getFullName()]++;
+                                } else {
+                                    $data[$inventor->getFullName()][$inv->getFullName()] = 1;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        $d=array();
+        $d = array();
         foreach($data as $key=>$collabs){
             $c=array();
             foreach($collabs as $i=>$count){
@@ -123,20 +129,15 @@ class DefaultController extends Controller {
 
     public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
-        $patents = $em->getRepository('DbCreatorBundle:Patent')->findAllByPubDate();
-
+        $patents = $em->getRepository('DbCreatorBundle:Patent')->countPatentsByPubDate();
+        
         $data = array();
 
-        foreach ($patents as $patent) {
-            $pubDate = $patent->getPublicationDate()->format('d/m/Y');
-
-            if (isset($data[$pubDate])) {
-                $data[$pubDate] ++;
-            } else {
-                $data[$pubDate] = 1;
-            }
+        foreach ($patents as $key => $value) {
+            $date = $value["publicationDate"]->format('d/m/Y');
+            $data[$date] = intval($value[1]);
         }
-
+        
         foreach ($data as $key => $d) {
             $key = str_replace('/', '-', $key);
             $year = date('Y', strtotime($key));

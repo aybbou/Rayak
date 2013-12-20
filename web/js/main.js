@@ -118,6 +118,9 @@ function showEvolution(data) {
         title: {
             text: 'Evolution du nombre de brevets publiés'
         },
+        legend: {
+          enabled: true  
+        },
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: {// don't display the dummy year
@@ -142,4 +145,53 @@ function showEvolution(data) {
                 data: data
             }]
     });
+}
+
+function sortArray ( array ) {
+  var arrayLength = array.length;  
+    for (var x = 0; x < arrayLength; x++) {
+        var max = array[x];
+        for (var y = x + 1; y < arrayLength; y++) {
+            if (array[y][1] > max[1]) {
+                max = array[y];
+                array[y] = array[x];
+                array[x] = max;
+            }
+        }
+    }
+
+  return array;
+}
+
+function renderKeywords(data, parameter) {
+    parameter = false;
+    var len = data.length;
+    var keywordsFinal = new Array();
+    var sortedAndDone = new Array();
+    var forbidden =new Array('between','therefor','such','via','thereof','use','methods','method');
+    var ingWords = new RegExp(/.*ing$/g);
+    // Checks if the keyword doesn't belong to the list above and/or is an -ing word, then adds it to the keywordsFinal array
+    for (var i = 0; i < len; i++) {
+        if ( ( forbidden.indexOf(data[i].keyword) === -1 ) && ( ingWords.test(data[i].keyword) === false) && (data[i].count >= 7) ){
+            keywordsFinal.push([data[i].keyword, data[i].count]);
+        }
+    }
+    // Manipulating the keywords array to combine both singular/plural words into one keyword (here we choose the plural)
+    console.log(keywordsFinal);
+    for (var indice = 0; indice < keywordsFinal.length; indice++) {
+        if (keywordsFinal[indice][0].toString().match(/.+s$/i) !== null) {
+            var singular = keywordsFinal[indice][0].toString().replace(/s$/, "");
+            for (var i = 0; i < keywordsFinal.length; i++) {
+                if (keywordsFinal[i][0] === singular) {
+                    keywordsFinal[indice][1] += keywordsFinal[i][1];
+                    keywordsFinal.splice(i, 1);
+                    indice = 0; // because keywords' length changes all the time (cf. previous line)
+                    break;
+                }
+            }
+        }
+    }
+    var doneKeywords = sortArray(keywordsFinal);
+    
+    return doneKeywords;
 }
