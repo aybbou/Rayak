@@ -1,3 +1,7 @@
+db_lens:
+    resource: "@DbLensBundle/Resources/config/routing.yml"
+    prefix:   /lens
+
 db_main:
     resource: "@DbMainBundle/Resources/config/routing.yml"
     prefix:   /

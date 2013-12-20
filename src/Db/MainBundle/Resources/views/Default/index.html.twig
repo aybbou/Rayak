@@ -10,6 +10,12 @@
 {% block body %}
 <div class="container">
     <div class="row">
+        <ul>
+            <li><a href="{{path('db_main_homepage')}}">FPO</a></li>
+            <li><a href="{{path('db_lens_homepage')}}">PatentLens</a></li>
+        </ul>
+    </div>
+    <div class="row">
         <div class="col-md-5">
             <h2 class="well">Evolution du nombre de brevets publiés</h2>
             <div id="charts"></div>
@@ -32,6 +38,8 @@
 </div>
 {% endblock %}
 
+{% set p = patent %}
+
 {% block javascripts %}
 {{parent()}}
 <script src="{{ asset('highcharts/js/highcharts.js') }}"></script>
@@ -43,14 +51,14 @@
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_inventors')}}?n=10',
+            url: '{{path('db_' ~ p ~ '_inventors')}}?n=10',
             success: function(data) {
                 showInventorsBar(data, '#inventorsBar');
             }
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_evolution')}}',
+            url: '{{path('db_' ~ p ~ '_evolution')}}',
             success: function(data) {
                 var graphData = new Array();
                 var l = data.length;
@@ -62,14 +70,14 @@
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_inventors_country')}}',
+            url: '{{path('db_' ~ p ~ '_inventors_country')}}',
             success: function(data) {
                 createMap(data);
             }
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_keywords')}}',
+            url: '{{path('db_' ~ p ~ '_keywords')}}',
             success: function(data) {
                 var l = data.length;
                 var d = new Array();
@@ -81,7 +89,7 @@
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_keywords')}}?n=10',
+            url: '{{path('db_' ~ p ~ '_keywords')}}?n=10',
             success: function(data) {
                 var l = data.length;
                 var d = new Array();
@@ -97,7 +105,7 @@
     function inventors(element, code, region) {
         $.ajax({
             type: 'GET',
-            url: '{{ path('db_main_inventors') }}?n=10&c=' + code,
+            url: '{{ path('db_' ~ p ~ '_inventors') }}?n=10&c=' + code,
             success: function(data) {
                 if (data.error) {
                     alert(data.error);
