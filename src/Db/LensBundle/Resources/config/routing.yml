@@ -1,0 +1,18 @@
+db_lens_homepage:
+    pattern: /
+    defaults: { _controller: DbLensBundle:Default:index }
+db_lens_inventors_country:
+    pattern: /inventors/country
+    defaults: { _controller: DbLensBundle:Default:inventorsCountry }
+db_lens_keywords:
+    pattern: /keywords
+    defaults: { _controller: DbLensBundle:Default:keywords }
+db_lens_evolution:
+    pattern: /evolution
+    defaults: { _controller: DbLensBundle:Default:evolution }
+db_lens_collab_inventors:
+    pattern: /collab/inventors
+    defaults: { _controller: DbLensBundle:Default:collabInventors }
+db_lens_inventors:
+    pattern: /inventors
+    defaults: { _controller: DbLensBundle:Default:inventors }

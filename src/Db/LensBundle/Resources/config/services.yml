@@ -1,0 +1,7 @@
+parameters:
+    db_lens.creator.class: Db\LensBundle\Creator\Creator
+
+services:
+    db_lens.creator:
+        class: %db_lens.creator.class%
+        arguments: ["@doctrine.orm.entity_manager"]
