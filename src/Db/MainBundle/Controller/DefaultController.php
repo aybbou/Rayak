@@ -129,20 +129,15 @@ class DefaultController extends Controller {
 
     public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
-        $patents = $em->getRepository('DbCreatorBundle:Patent')->findAllByPubDate();
-
+        $patents = $em->getRepository('DbCreatorBundle:Patent')->countPatentsByPubDate();
+        
         $data = array();
 
-        foreach ($patents as $patent) {
-            $pubDate = $patent->getPublicationDate()->format('d/m/Y');
-
-            if (isset($data[$pubDate])) {
-                $data[$pubDate] ++;
-            } else {
-                $data[$pubDate] = 1;
-            }
+        foreach ($patents as $key => $value) {
+            $date = $value["publicationDate"]->format('d/m/Y');
+            $data[$date] = intval($value[1]);
         }
-
+        
         foreach ($data as $key => $d) {
             $key = str_replace('/', '-', $key);
             $year = date('Y', strtotime($key));
