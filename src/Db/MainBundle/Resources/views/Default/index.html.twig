@@ -91,6 +91,13 @@
                 showKeywordsPieChart(d);
             }
         });
+        $.ajax({
+            type: 'GET',
+            url: '{{path('db_main_collab_inventors')}}',
+            success: function(data) {
+                console.log(data.length);
+            }
+        });
     });
 
 
