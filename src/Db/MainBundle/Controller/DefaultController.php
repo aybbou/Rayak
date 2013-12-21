@@ -19,37 +19,9 @@ class DefaultController extends Controller {
         $data = array();
         $em = $this->getDoctrine()->getManager();
 
-        $inventors = $em->getRepository('DbCreatorBundle:Inventor')->findAll();
-
-        foreach ($inventors as $inventor) {
-            $patents = $inventor->getPatents();
-            $data[$inventor->getFullName()] = array();
-            foreach ($patents as $patent) {
-                foreach ($patent->getInventors() as $inv) {
-                    if (strcmp($inv->getFullName(), $inventor->getFullName())!=0) {
-                        if (isset($data[$inventor->getFullName()][$inv->getFullName()])) {
-                            $data[$inventor->getFullName()][$inv->getFullName()] ++;
-                        } else {
-                            $data[$inventor->getFullName()][$inv->getFullName()] = 1;
-                        }
-                    }
-                }
-            }
-        }
-        $d=array();
-        foreach($data as $key=>$collabs){
-            $c=array();
-            foreach($collabs as $i=>$count){
-                if($count<=2){
-                    continue;
-                }
-                $c[]=array('inv'=>$key,'count'=>$count);
-            }
-            if(count($c)==0){continue;}
-            $d[]=array('inv'=>$key,'collabs'=>$c);
-        }
-
-        $response = new JsonResponse($d);
+        $data = $em->getRepository("DbCreatorBundle:Inventor")->getInventorsCollabs();
+        
+        $response = new JsonResponse($data);
         return $response;
     }
 
