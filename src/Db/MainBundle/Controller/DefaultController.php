@@ -18,36 +18,8 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository("DbCreatorBundle:Inventor")->getInventorsCollabs();
-        // $inventors = array();
-        $links = array();
-        // $nodes = array();
 
-        // STORING THE INVENTORS' NAMES IN THE ARRAY $inventors[]
-        // foreach ($data as $value) {
-        //     if(!in_array($value["inv1"], $inventors)){
-        //         $inventors[] = $value["inv1"];
-        //     }
-        //     if(!in_array($value["inv2"], $inventors)){
-        //         $inventors[] = $value["inv2"];
-        //     }
-        // }
-
-        // Constructing the $nodes array
-        // $inventorsLength = count($inventors);
-        // for ($i=0; $i < $inventorsLength; $i++) { 
-        //     $nodes[] = array('name' => $inventors[$i]);
-        // }
-       
-        // Constructing the $links array
-        // foreach ($data as $value) {
-        //     $indexInv1 = $value["inv1"];// array_search($value["inv1"], $inventors);
-        //     $indexInv2 = $value["inv2"];// array_search($value["inv2"], $inventors);
-        //     $links[] = array('source' => $indexInv1, 'target' => $indexInv2, 'value' => $value["number"]);
-        // }
-
-        $finalResponse = array(/*"nodes" => $nodes,*/ "links" => $data);
-
-        $response = new JsonResponse($finalResponse);
+        $response = new JsonResponse(array("links" => $data));
         return $response;
     }
 
