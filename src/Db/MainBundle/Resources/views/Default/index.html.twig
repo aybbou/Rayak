@@ -124,7 +124,7 @@ text {
         });
         $.ajax({
             type: 'GET',
-            url: '{{path('db_main_collab_inventors')}}',
+            url: '{{path('db_' ~ p ~ '_collab_inventors')}}',
             success: function(data) {
                 console.log(data.links.length);
                 drawNetwork(data);

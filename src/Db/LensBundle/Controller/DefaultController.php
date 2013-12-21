@@ -20,7 +20,7 @@ class DefaultController extends Controller {
 
         $data = $em->getRepository("DbLensBundle:Inventor")->getInventorsCollabs();
 
-        $response = new JsonResponse($data);
+        $response = new JsonResponse(array("links" => $data));
         return $response;
     }
 
