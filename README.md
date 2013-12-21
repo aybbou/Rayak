@@ -1,4 +1,4 @@
-Rayak :
+Rayak : [![Build Status](https://travis-ci.org/aybbou/Rayak.png?branch=master)](https://travis-ci.org/aybbou/Rayak) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/aybbou/Rayak/badges/quality-score.png?s=9d526f372cb959371d1670e7b53ffe145bff8a95)](https://scrutinizer-ci.com/g/aybbou/Rayak/)
 =======
 Le projet SID.
 Installation :
