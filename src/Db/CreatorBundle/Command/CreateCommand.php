@@ -26,7 +26,7 @@ class CreateCommand extends ContainerAwareCommand {
         $output->writeln('Preparing the SQL query...');
 
         $creator = $this->getContainer()->get('db_creator.creator');
-        $creator->setXmlFilePath('/home/aybbou/Bureau/result.xml');
+        $creator->setXmlFilePath('/home/occulti/Bureau/result.xml');
         $creator->createDb();
 
         $output->writeln('Done! Have a nice day !');
