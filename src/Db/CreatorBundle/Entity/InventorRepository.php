@@ -14,6 +14,7 @@ class InventorRepository extends EntityRepository{
                     ->innerJoin('p.inventors', 'i2', 'WITH', 'i2.fullName > i1.fullName')
                     ->groupBy('inv1, inv2')
                     ->orderBy('number','DESC')
+                    ->setMaxResults(300)	// For performance purposes
                     ->getQuery()->getResult();
     }
 }
