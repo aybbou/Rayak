@@ -22,12 +22,22 @@ class CreateCommand extends ContainerAwareCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $this->prepareDb($output);
-        $output->writeln('Preparing the SQL query...');
+       // $this->prepareDb($output);
+        $output->writeln('Preparing the SQL query for FreePatentsOnline...');
 
         $creator = $this->getContainer()->get('db_creator.creator');
+<<<<<<< HEAD
         $creator->setXmlFilePath('/home/occulti/Bureau/result.xml');
         $creator->createDb();
+=======
+        $creator->setXmlFilePath('/home/aybbou/Bureau/result.xml');
+        //$creator->createDb();
+        
+        $output->writeln('Preparing the SQL query for PatentLens...');
+        $lensCreator = $this->getContainer()->get('db_lens.creator');
+        $lensCreator->setXmlFilePath('/home/aybbou/Bureau/results.xml');
+        //$lensCreator->createDb();
+>>>>>>> 03013a3bc582467faf366ca8631770ff9d33bb6f
 
         $output->writeln('Done! Have a nice day !');
     }

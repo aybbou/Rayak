@@ -1,18 +1,18 @@
 <?php
 
-namespace Db\CreatorBundle\Entity;
+namespace Db\LensBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Db\CreatorBundle\Entity\Country;
+
+use Db\LensBundle\Entity\Patent;
 
 /**
- * Inventor
+ * Applicant
  *
- * @ORM\Table()
+ * @ORM\Table(name="applicant2")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Db\CreatorBundle\Entity\InventorRepository")
  */
-class Inventor
+class Applicant
 {
 
     /**
@@ -22,16 +22,18 @@ class Inventor
      */
     private $fullName;
     
+    
     /**
-    * @ORM\ManyToMany(targetEntity="Patent", mappedBy="inventors")
+    * @ORM\ManyToMany(targetEntity="Patent", mappedBy="applicants")
     */
     private $patents;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="inventors")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="applicants")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      */
     private $country;
+
 
     /**
      * Get id
@@ -47,7 +49,7 @@ class Inventor
      * Set fullName
      *
      * @param string $fullName
-     * @return Inventor
+     * @return Applicant
      */
     public function setFullName($fullName)
     {
@@ -76,10 +78,10 @@ class Inventor
     /**
      * Add patents
      *
-     * @param \Db\CreatorBundle\Entity\Patent $patents
-     * @return Inventor
+     * @param \Db\LensBundle\Entity\Patent $patents
+     * @return Applicant
      */
-    public function addPatent(\Db\CreatorBundle\Entity\Patent $patents)
+    public function addPatent(\Db\LensBundle\Entity\Patent $patents)
     {
         $this->patents[] = $patents;
     
@@ -89,9 +91,9 @@ class Inventor
     /**
      * Remove patents
      *
-     * @param \Db\CreatorBundle\Entity\Patent $patents
+     * @param \Db\LensBundle\Entity\Patent $patents
      */
-    public function removePatent(\Db\CreatorBundle\Entity\Patent $patents)
+    public function removePatent(\Db\LensBundle\Entity\Patent $patents)
     {
         $this->patents->removeElement($patents);
     }
@@ -109,10 +111,10 @@ class Inventor
     /**
      * Set country
      *
-     * @param \Db\CreatorBundle\Entity\Country $country
-     * @return Inventor
+     * @param \Db\LensBundle\Entity\Country $country
+     * @return Applicant
      */
-    public function setCountry(\Db\CreatorBundle\Entity\Country $country = null)
+    public function setCountry(\Db\LensBundle\Entity\Country $country = null)
     {
         $this->country = $country;
     
@@ -122,7 +124,7 @@ class Inventor
     /**
      * Get country
      *
-     * @return \Db\CreatorBundle\Entity\Country 
+     * @return \Db\LensBundle\Entity\Country 
      */
     public function getCountry()
     {
