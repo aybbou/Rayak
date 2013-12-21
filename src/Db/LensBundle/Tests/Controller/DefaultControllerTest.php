@@ -1,6 +1,6 @@
 <?php
 
-namespace Db\MainBundle\Tests\Controller;
+namespace Db\LensBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -12,6 +12,6 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertTrue($crawler->filter('html:contains("FPO")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("PatentLens")')->count() > 0);
     }
 }

@@ -138,7 +138,7 @@ function showEvolution(data) {
             }
         },
         series: [{
-                name: 'Brevets publiés 15/09/2013 - 15/11/2013',
+                name: 'Brevets publiés',
                 data: data
             }]
     });

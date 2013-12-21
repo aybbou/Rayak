@@ -1,24 +1,24 @@
 <?php
 
-namespace Db\MainBundle\Controller;
+namespace Db\LensBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Db\CreatorBundle\Form\PatentType;
-use Db\CreatorBundle\Entity\Patent;
+use Db\LensBundle\Form\PatentType;
+use Db\LensBundle\Entity\Patent;
 
 class DefaultController extends Controller {
 
     public function indexAction() {
         return $this->render('DbMainBundle:Default:index.html.twig', array(
-                    'patent' => 'main'
+                    'patent' => 'lens'
         ));
     }
 
     public function collabInventorsAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $data = $em->getRepository("DbCreatorBundle:Inventor")->getInventorsCollabs();
+        $data = $em->getRepository("DbLensBundle:Inventor")->getInventorsCollabs();
 
         $response = new JsonResponse($data);
         return $response;
@@ -26,7 +26,7 @@ class DefaultController extends Controller {
 
     public function inventorsCountryAction() {
         $em = $this->getDoctrine()->getManager();
-        $countries = $em->getRepository('DbCreatorBundle:Country')->findAll();
+        $countries = $em->getRepository('DbLensBundle:Country')->findAll();
 
         $data = array();
 
@@ -40,7 +40,7 @@ class DefaultController extends Controller {
 
     public function keywordsAction() {
         $em = $this->getDoctrine()->getManager();
-        $patents = $em->getRepository('DbCreatorBundle:Patent')->findAll();
+        $patents = $em->getRepository('DbLensBundle:Patent')->findAll();
 
         $n = null;
         if (isset($_GET['n'])) {
@@ -58,9 +58,9 @@ class DefaultController extends Controller {
 
         if (isset($_GET['c'])) {
             $c = $_GET['c'];
-            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->findBy(array('country' => $c));
+            $inventors = $em->getRepository('DbLensBundle:Inventor')->findBy(array('country' => $c));
         } else {
-            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->findAll();
+            $inventors = $em->getRepository('DbLensBundle:Inventor')->findAll();
         }
 
 
@@ -96,13 +96,18 @@ class DefaultController extends Controller {
 
     public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
-        $patents = $em->getRepository('DbCreatorBundle:Patent')->countPatentsByPubDate();
+        $patents = $em->getRepository('DbLensBundle:Patent')->findAllByPubDate();
 
         $data = array();
 
-        foreach ($patents as $key => $value) {
-            $date = $value["publicationDate"]->format('d/m/Y');
-            $data[$date] = intval($value[1]);
+        foreach ($patents as $patent) {
+            $pubDate = $patent->getPublicationDate()->format('d/m/Y');
+
+            if (isset($data[$pubDate])) {
+                $data[$pubDate] ++;
+            } else {
+                $data[$pubDate] = 1;
+            }
         }
 
         foreach ($data as $key => $d) {
