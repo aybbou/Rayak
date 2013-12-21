@@ -26,6 +26,10 @@ class CreateCommand extends ContainerAwareCommand {
         $output->writeln('Preparing the SQL query for FreePatentsOnline...');
 
         $creator = $this->getContainer()->get('db_creator.creator');
+
+        $creator->setXmlFilePath('/home/occulti/Bureau/result.xml');
+        $creator->createDb();
+
         $creator->setXmlFilePath('/home/aybbou/Bureau/result.xml');
         //$creator->createDb();
         
@@ -33,6 +37,7 @@ class CreateCommand extends ContainerAwareCommand {
         $lensCreator = $this->getContainer()->get('db_lens.creator');
         $lensCreator->setXmlFilePath('/home/aybbou/Bureau/results.xml');
         //$lensCreator->createDb();
+        
 
         $output->writeln('Done! Have a nice day !');
     }
