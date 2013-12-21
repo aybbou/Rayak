@@ -10,6 +10,7 @@ use Db\LensBundle\Entity\Country;
  *
  * @ORM\Table(name="inventor2")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Db\CreatorBundle\Entity\InventorRepository")
  */
 class Inventor
 {

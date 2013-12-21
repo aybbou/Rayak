@@ -10,17 +10,16 @@ use Db\CreatorBundle\Entity\Patent;
 class DefaultController extends Controller {
 
     public function indexAction() {
-        return $this->render('DbMainBundle:Default:index.html.twig',array(
-            'patent'=>'main'
+        return $this->render('DbMainBundle:Default:index.html.twig', array(
+                    'patent' => 'main'
         ));
     }
 
     public function collabInventorsAction() {
-        $data = array();
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository("DbCreatorBundle:Inventor")->getInventorsCollabs();
-        
+
         $response = new JsonResponse($data);
         return $response;
     }
@@ -98,7 +97,7 @@ class DefaultController extends Controller {
     public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbCreatorBundle:Patent')->countPatentsByPubDate();
-        
+
         $data = array();
 
         foreach ($patents as $key => $value) {

@@ -12,7 +12,7 @@ use Db\LensBundle\Entity\Inventor;
  *
  * @ORM\Table(name="patent2")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Db\LensBundle\Entity\PatentRepository")
+ * @ORM\Entity(repositoryClass="Db\CreatorBundle\Entity\PatentRepository")
  */
 class Patent
 {
