@@ -7,13 +7,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller {
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->render('DbMainBundle:Default:index.html.twig', array(
                     'patent' => 'main'
         ));
     }
 
-    public function collabInventorsAction() {
+    public function inventorKeywordsAction()
+    {
+        $repo = $this->getDoctrine()->getManager()->getRepository("DbCreatorBundle:Inventor");
+        $result = $repo->getTopXInventors(1);
+        $inventor = $repo->findOneByFullName($result[0]["fullName"]);
+        $keywords = $this->get('db.extractor')->getKeywordsOfInventor($inventor);
+        return new JsonResponse($keywords);
+    }
+
+    public function collabInventorsAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository("DbCreatorBundle:Inventor")->getInventorsCollabs();
@@ -22,7 +33,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function inventorsCountryAction() {
+    public function inventorsCountryAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $countries = $em->getRepository('DbCreatorBundle:Country')->findAll();
 
@@ -36,7 +48,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function keywordsAction() {
+    public function keywordsAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbCreatorBundle:Patent')->findAll();
 
@@ -51,7 +64,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function inventorsAction() {
+    public function inventorsAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         if (isset($_GET['c'])) {
@@ -72,7 +86,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function evolutionAction() {
+    public function evolutionAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbCreatorBundle:Patent')->countPatentsByPubDate();
 

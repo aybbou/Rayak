@@ -16,3 +16,6 @@ db_main_collab_inventors:
 db_main_inventors:
     pattern: /inventors
     defaults: { _controller: DbMainBundle:Default:inventors }
+db_main_inventor_keywords:
+    pattern: /inventor/keyword
+    defaults: { _controller: DbMainBundle:Default:inventorKeywords }
