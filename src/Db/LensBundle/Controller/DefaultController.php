@@ -58,56 +58,31 @@ class DefaultController extends Controller {
 
         if (isset($_GET['c'])) {
             $c = $_GET['c'];
-            $inventors = $em->getRepository('DbLensBundle:Inventor')->findBy(array('country' => $c));
+            $inventors = $em->getRepository('DbLensBundle:Inventor')->getTopXInventors(10,$c);
         } else {
-            $inventors = $em->getRepository('DbLensBundle:Inventor')->findAll();
+            $inventors = $em->getRepository('DbLensBundle:Inventor')->getTopXInventors(10);
         }
-
 
         $data = array();
 
         foreach ($inventors as $inventor) {
-            $data[$inventor->getFullName() . ' (' . strtoupper($inventor->getCountry()->getCode()) . ')'] = $inventor->getPatents()->count();
+            $pays = $inventor["code"];
+            $key = $inventor["fullName"] . ' (' . strtoupper($pays) . ')';
+            $data[] = array( 'name' => $key , 'count' => intval($inventor["num"]));
         }
-
-        arsort($data);
-
-        $break = false;
-        if (isset($_GET['n'])) {
-            $n = $_GET['n'];
-            $break = true;
-        }
-
-        $d = array();
-        $c = 1;
-        foreach ($data as $key => $count) {
-            $d[] = array('name' => $key, 'count' => $count);
-            if ($break) {
-                if ($c == $n) {
-                    break;
-                }
-            }
-            $c++;
-        }
-
-        $response = new JsonResponse($d);
+        $response = new JsonResponse($data);
         return $response;
     }
 
     public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
-        $patents = $em->getRepository('DbLensBundle:Patent')->findAllByPubDate();
+        $patents = $em->getRepository('DbLensBundle:Patent')->countPatentsByPubDate();
 
         $data = array();
 
-        foreach ($patents as $patent) {
-            $pubDate = $patent->getPublicationDate()->format('d/m/Y');
-
-            if (isset($data[$pubDate])) {
-                $data[$pubDate] ++;
-            } else {
-                $data[$pubDate] = 1;
-            }
+        foreach ($patents as $key => $value) {
+            $date = $value["publicationDate"]->format('d/m/Y');
+            $data[$date] = intval($value[1]);
         }
 
         foreach ($data as $key => $d) {
