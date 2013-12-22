@@ -16,17 +16,27 @@ class KeywordsExtractor {
         'at', 'be', 'that', 'many', 'on', 'from');
     private $symbols = array('.', ',', '\\', '(', ')', '/', ';', ':');
 
-    public function getKeywordsInventor($inventor, $number=20)
+    public function getKeywordsOfInventor($inventor, $number=20)
     {
         $titles = array();
-        $keywords = array();
-        $keys = array();
-        $counts = array();
         $patents = $inventor->getPatents();
 
         foreach ($patents as $patent) {
             $titles[] = $patent->getTitle();
         }
+
+        $keywordsCounted = $this->fromTitlesToKeywords($titles);
+
+        $keywordsFinal = array_slice($keywordsCounted, 0, $number);
+        $keys = array_keys($keywordsFinal);
+        $counts = array_values($keywordsFinal);
+
+        return array('fullName' => $inventor->getFullName(), 'keywords' => $keys, 'counts' => $counts);
+    }
+
+    private function fromTitlesToKeywords($titles)
+    {
+        $keywords = array();
 
         foreach ($titles as $title) {
             $var = str_replace($this->symbols, " ", strtolower($title));
@@ -38,16 +48,9 @@ class KeywordsExtractor {
             }
         }
 
-        $keywordsCounted = array_count_values($keywords);
-        arsort($keywordsCounted);
-
-        $keywordsCounted = array_slice($keywordsCounted, 0, $number);
-        foreach ($keywordsCounted as $key => $value) {
-            $keys[] = $key;
-            $counts[] = $value;
-        }
-
-        return array('fullName' => $inventor->getFullName(), 'keywords' => $keys, 'counts' => $counts);
+        $final = array_count_values($keywords);
+        arsort($final);
+        return $final;
     }
 
     public function getKeywordsFromPatents($patents,$n=null)
