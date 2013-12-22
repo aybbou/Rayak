@@ -11,12 +11,47 @@ class KeywordsExtractor {
 
     private $notKeywords = array(
         ' ', 'and', 'or', 'the', 'i', 'by',
-        'a', 'of', 'to', 'is', 'as', 'when',
-        'an', 'in', 'for', 'with', 'are',
+        'a', 'of', 'to', 'is', 'as', 'when', 'same',
+        'an', 'in', 'for', 'with', 'are', 'thereof',
         'at', 'be', 'that', 'many', 'on', 'from');
     private $symbols = array('.', ',', '\\', '(', ')', '/', ';', ':');
 
-    public function getKeywordsFromPatents($patents,$n=null) {
+    public function getKeywordsInventor($inventor, $number=20)
+    {
+        $titles = array();
+        $keywords = array();
+        $keys = array();
+        $counts = array();
+        $patents = $inventor->getPatents();
+
+        foreach ($patents as $patent) {
+            $titles[] = $patent->getTitle();
+        }
+
+        foreach ($titles as $title) {
+            $var = str_replace($this->symbols, " ", strtolower($title));
+            $titleExploded = explode(" ", $var);
+            foreach ($titleExploded as $value) {
+                if(!in_array($value, $this->notKeywords)){
+                    $keywords[] = $value;    
+                }
+            }
+        }
+
+        $keywordsCounted = array_count_values($keywords);
+        arsort($keywordsCounted);
+
+        $keywordsCounted = array_slice($keywordsCounted, 0, $number);
+        foreach ($keywordsCounted as $key => $value) {
+            $keys[] = $key;
+            $counts[] = $value;
+        }
+
+        return array('fullName' => $inventor->getFullName(), 'keywords' => $keys, 'counts' => $counts);
+    }
+
+    public function getKeywordsFromPatents($patents,$n=null)
+    {
         $data = array();
 
         foreach ($patents as $patent) {
@@ -52,5 +87,4 @@ class KeywordsExtractor {
 
         return $d;
     }
-
 }
