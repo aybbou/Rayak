@@ -21,7 +21,7 @@ class DefaultController extends Controller {
         $repo = $this->getDoctrine()->getManager()->getRepository("DbCreatorBundle:Inventor");
         $result = $repo->getTopXInventors(1);
         $inventor = $repo->findOneByFullName($result[0]["fullName"]);
-        $keywords = $this->get('db.extractor')->getKeywordsInventor($inventor);
+        $keywords = $this->get('db.extractor')->getKeywordsOfInventor($inventor);
         return new JsonResponse($keywords);
     }
 
