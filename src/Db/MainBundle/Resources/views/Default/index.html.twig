@@ -55,6 +55,8 @@
         <div id="keywordsPiechart"></div>
         <h2 class="well">Réseau de cooccurrences des auteurs</h2>
         <div id="network"></div>
+        <h2 class="well">Tendances de l'auteur le plus publié</h2>
+        <div id="scatterPlot"></div>
     </div>
 </div>
 {% endblock %}
@@ -129,8 +131,84 @@
                 drawNetwork(data);
             }
         });
+        $.ajax({
+            type: 'GET',
+            url: '{{path('db_' ~ p ~ '_inventor_keywords')}}',
+            success: function(data) {
+                scatterPlot(data);
+            }
+        });
     });
 
+    function scatterPlot ( data ) {
+        $('#scatterPlot').highcharts({
+            chart: {
+                type: 'scatter',
+                zoomType: 'xy'
+            },
+            title: {
+                text: "Tendances de l'auteur le plus publié"
+            },
+            subtitle: {
+                text: data.fullName
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Mots-clés'
+                },
+                categories:   data.keywords,
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Fréquence'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 9,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br>',
+                        pointFormat: "<b>{point.y} fois</b>"
+                    }
+                }
+            },
+            series: [{
+                name: data.fullName,
+                color: 'rgba(223, 83, 83, .5)',
+                data: data.counts
+            }]
+        });
+    }
 
     function drawNetwork ( graph ) {
         var links = graph.links;
