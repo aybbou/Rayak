@@ -58,39 +58,19 @@ class DefaultController extends Controller {
 
         if (isset($_GET['c'])) {
             $c = $_GET['c'];
-            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->findBy(array('country' => $c));
+            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->getTopXInventors(10,$c);
         } else {
-            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->findAll();
+            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->getTopXInventors(10);
         }
-
 
         $data = array();
 
         foreach ($inventors as $inventor) {
-            $data[$inventor->getFullName() . ' (' . strtoupper($inventor->getCountry()->getCode()) . ')'] = $inventor->getPatents()->count();
+            $pays = $inventor["code"];
+            $key = $inventor["fullName"] . ' (' . strtoupper($pays) . ')';
+            $data[] = array( 'name' => $key , 'count' => intval($inventor["num"]));
         }
-
-        arsort($data);
-
-        $break = false;
-        if (isset($_GET['n'])) {
-            $n = $_GET['n'];
-            $break = true;
-        }
-
-        $d = array();
-        $c = 1;
-        foreach ($data as $key => $count) {
-            $d[] = array('name' => $key, 'count' => $count);
-            if ($break) {
-                if ($c == $n) {
-                    break;
-                }
-            }
-            $c++;
-        }
-
-        $response = new JsonResponse($d);
+        $response = new JsonResponse($data);
         return $response;
     }
 
@@ -116,5 +96,4 @@ class DefaultController extends Controller {
         $response = new JsonResponse($final);
         return $response;
     }
-
 }
