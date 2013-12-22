@@ -4,8 +4,6 @@ namespace Db\LensBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Db\LensBundle\Form\PatentType;
-use Db\LensBundle\Entity\Patent;
 
 class DefaultController extends Controller {
 

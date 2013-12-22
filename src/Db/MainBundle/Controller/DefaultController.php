@@ -4,8 +4,6 @@ namespace Db\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Db\CreatorBundle\Form\PatentType;
-use Db\CreatorBundle\Entity\Patent;
 
 class DefaultController extends Controller {
 
