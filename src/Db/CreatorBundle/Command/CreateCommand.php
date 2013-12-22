@@ -22,21 +22,43 @@ class CreateCommand extends ContainerAwareCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-       // $this->prepareDb($output);
+        $this->prepareDb($output);
+        
         $output->writeln('Preparing the SQL query for FreePatentsOnline...');
-
         $creator = $this->getContainer()->get('db_creator.creator');
-
-        $creator->setXmlFilePath('/home/occulti/Bureau/result.xml');
-        $creator->createDb();
-
         $creator->setXmlFilePath('/home/aybbou/Bureau/result.xml');
-        //$creator->createDb();
+        $creator->setConfig(array(
+            'bundle'=>'Creator',
+            'patent'=>'patent',
+            'idTag'=>true,
+            'title'=>'title',
+            'abstract'=>'abstract',
+            'pubDate'=>'publication_date',
+            'filDate'=>'filing_date',
+            'inventor'=>'inventor',
+            'name'=>'name',
+            'country'=>'country',
+            'applicant'=>'assignee'
+        ));
+        $creator->createDb();
         
         $output->writeln('Preparing the SQL query for PatentLens...');
-        $lensCreator = $this->getContainer()->get('db_lens.creator');
+        $lensCreator = $this->getContainer()->get('db_creator.creator');
         $lensCreator->setXmlFilePath('/home/aybbou/Bureau/results.xml');
-        //$lensCreator->createDb();
+        $lensCreator->setConfig(array(
+            'bundle'=>'Lens',
+            'patent'=>'patent',
+            'idTag'=>false,
+            'title'=>'Title',
+            'abstract'=>'Abstract',
+            'pubDate'=>'PublicationDate',
+            'filDate'=>'FilingDate',
+            'inventor'=>'ApplicantAndInventor',
+            'name'=>'FullName',
+            'country'=>'Country',
+            'applicant'=>'ApplicantAndInventor'
+        ));
+        $lensCreator->createDb();
         
 
         $output->writeln('Done! Have a nice day !');
