@@ -9,28 +9,33 @@ use Doctrine\ORM\EntityManager;
  *
  * @author Ayyoub
  */
-class Creator {
+class Creator
+{
 
     private $xmlFilePath;
     protected $em;
     private $config;
 
-    public function setXmlFilePath($xmlFilePath) {
+    public function setXmlFilePath($xmlFilePath)
+    {
         $this->xmlFilePath = $xmlFilePath;
     }
 
-    public function setConfig(array $config) {
+    public function setConfig(array $config)
+    {
         $this->config = $config;
-        if (!isset($config['bundle']) || !isset($config['patent']) || !isset($config['title']) || !isset($config['abstract']) || !isset($config['pubDate']) || !isset($config['filDate']) || !isset($config['inventor']) || !isset($config['name']) || !isset($config['country']) || !isset($config['applicant'])) {
+        if( !isset($config['bundle'], $config['patent'], $config['title'], $config['abstract'], $config['pubDate'], $config['filDate'], $config['inventor'], $config['name']), $config['country']), $config['applicant']) ) {
             throw new \Exception('A parameter is messing !');
         }
     }
 
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em)
+    {
         $this->em = $em;
     }
 
-    public function createDb() {
+    public function createDb()
+    {
         $xml = new \DOMDocument();
         $xml->load($this->xmlFilePath);
 
@@ -45,7 +50,8 @@ class Creator {
         $this->em->flush();
     }
 
-    protected function addPatent($patent) {
+    protected function addPatent($patent)
+    {
         $idTag = $this->config['idTag'];
         $abstractTag = $this->config['abstract'];
         $titleTag = $this->config['title'];
@@ -99,7 +105,8 @@ class Creator {
         }
     }
 
-    protected function getInventors($patent) {
+    protected function getInventors($patent)
+    {
         $inventorsTab = array();
         $inventorTag = $this->config['inventor'];
         $inventors = $patent->getElementsByTagName($inventorTag);
@@ -109,7 +116,8 @@ class Creator {
         return $inventorsTab;
     }
 
-    protected function getInventor($inventor) {
+    protected function getInventor($inventor)
+    {
         $nameTag = $this->config['name'];
         $countryTag = $this->config['country'];
         $bundle=  $this->config['bundle'];
@@ -144,7 +152,8 @@ class Creator {
         return $inventor;
     }
 
-    protected function getApplicants($patent) {
+    protected function getApplicants($patent)
+    {
         $applicantsTab = array();
         $applicantTag = $this->config['applicant'];
         $applicants = $patent->getElementsByTagName($applicantTag);
@@ -154,7 +163,8 @@ class Creator {
         return $applicantsTab;
     }
 
-    protected function getApplicant($applicant) {
+    protected function getApplicant($applicant)
+    {
         $nameTag = $this->config['name'];
         $countryTag = $this->config['country'];
         $bundle=  $this->config['bundle'];

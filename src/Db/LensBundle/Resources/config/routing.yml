@@ -16,3 +16,6 @@ db_lens_collab_inventors:
 db_lens_inventors:
     pattern: /inventors
     defaults: { _controller: DbLensBundle:Default:inventors }
+db_lens_inventor_keywords:
+    pattern: /inventor/keyword
+    defaults: { _controller: DbLensBundle:Default:inventorKeywords }
