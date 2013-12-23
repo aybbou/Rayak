@@ -81,7 +81,7 @@ class Creator
 
         $patent = $this->em->getRepository('Db'.$bundle.'Bundle:Patent')->find($id);
         if ($patent == null) {
-            $patentClass = "\\Db\\$bundle"."Bundle\\Entity\\Patent";
+            $patentClass = "\\Db\\{$bundle}Bundle\\Entity\\Patent";
             $patent = new $patentClass();
             $patent->setId($id);
             $patent->setAbstract($abstract);
@@ -127,14 +127,14 @@ class Creator
 
         $inventor = $this->em->getRepository('Db'.$bundle.'Bundle:Inventor')->find($name);
         if ($inventor == null) {
-            $inventorClass="\\Db\\$bundle"."Bundle\\Entity\\Inventor";
+            $inventorClass="\\Db\\{$bundle}Bundle\\Entity\\Inventor";
             $inventor = new $inventorClass();
             $inventor->setFullName($name);
         }
 
         $country = $this->em->getRepository('Db'.$bundle.'Bundle:Country')->find($countryCode);
         if ($country == null) {
-            $countryClass= "\\Db\\$bundle"."Bundle\\Entity\\Country";
+            $countryClass= "\\Db\\{$bundle}Bundle\\Entity\\Country";
             $country = new $countryClass();
             $country->setName($countryCode);
             $country->setCode($countryCode);
@@ -189,7 +189,7 @@ class Creator
 
         $country = $this->em->getRepository('Db'.$bundle.'Bundle:Country')->find($countryCode);
         if ($country == null) {
-            $countryClass= "\\Db\\$bundle"."Bundle\\Entity\\Country";
+            $countryClass= "\\Db\\{$bundle}Bundle\\Entity\\Country";
             $country = new $countryClass();
             $country->setName($countryCode);
             $country->setCode($countryCode);
@@ -197,7 +197,7 @@ class Creator
 
         $applicant = $this->em->getRepository('Db'.$bundle.'Bundle:Applicant')->find($name);
         if ($applicant == null) {
-            $applicantClass= "\\Db\\$bundle"."Bundle\\Entity\\Applicant";
+            $applicantClass= "\\Db\\{$bundle}Bundle\\Entity\\Applicant";
             $applicant = new $applicantClass();
             $applicant->setFullName($name);
             $applicant->setCountry($country);
