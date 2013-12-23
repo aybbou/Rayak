@@ -24,7 +24,7 @@ class Creator
     public function setConfig(array $config)
     {
         $this->config = $config;
-        if( !isset($config['bundle'], $config['patent'], $config['title'], $config['abstract'], $config['pubDate'], $config['filDate'], $config['inventor'], $config['name']), $config['country']), $config['applicant']) ) {
+        if( !isset($config['bundle'], $config['patent'], $config['title'], $config['abstract'], $config['pubDate'], $config['filDate'], $config['inventor'], $config['name'], $config['country'], $config['applicant']) ) {
             throw new \Exception('A parameter is messing !');
         }
     }
