@@ -22,7 +22,7 @@ class DefaultController extends Controller {
         $keywords = $this->get('db.extractor')->getKeywordsOfInventor($inventor);
         return new JsonResponse($keywords);
     }
-
+//fonction collabInventorsAction
     public function collabInventorsAction()
     {
         $em = $this->getDoctrine()->getManager();
