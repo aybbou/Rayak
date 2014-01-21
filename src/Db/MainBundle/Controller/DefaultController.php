@@ -5,7 +5,8 @@ namespace Db\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
     public function indexAction()
     {
@@ -22,7 +23,10 @@ class DefaultController extends Controller {
         $keywords = $this->get('db.extractor')->getKeywordsOfInventor($inventor);
         return new JsonResponse($keywords);
     }
-//fonction collabInventorsAction
+
+    /**
+     * fonction collabInventorsAction
+     */
     public function collabInventorsAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -70,7 +74,7 @@ class DefaultController extends Controller {
 
         if (isset($_GET['c'])) {
             $c = $_GET['c'];
-            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->getTopXInventors(10,$c);
+            $inventors = $em->getRepository('DbCreatorBundle:Inventor')->getTopXInventors(10, $c);
         } else {
             $inventors = $em->getRepository('DbCreatorBundle:Inventor')->getTopXInventors(10);
         }
@@ -80,7 +84,7 @@ class DefaultController extends Controller {
         foreach ($inventors as $inventor) {
             $pays = $inventor["code"];
             $key = $inventor["fullName"] . ' (' . strtoupper($pays) . ')';
-            $data[] = array( 'name' => $key , 'count' => intval($inventor["num"]));
+            $data[] = array('name' => $key, 'count' => intval($inventor["num"]));
         }
         $response = new JsonResponse($data);
         return $response;
@@ -109,4 +113,5 @@ class DefaultController extends Controller {
         $response = new JsonResponse($final);
         return $response;
     }
+
 }

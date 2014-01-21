@@ -7,7 +7,8 @@ namespace Db\MainBundle\Utility;
  *
  * @author Abdelaziz
  */
-class KeywordsExtractor {
+class KeywordsExtractor
+{
 
     private $notKeywords = array(
         ' ', 'and', 'or', 'the', 'i', 'by',
@@ -16,7 +17,7 @@ class KeywordsExtractor {
         'at', 'be', 'that', 'many', 'on', 'from');
     private $symbols = array('.', ',', '\\', '(', ')', '/', ';', ':');
 
-    public function getKeywordsOfInventor($inventor, $number=20)
+    public function getKeywordsOfInventor($inventor, $number = 20)
     {
         $titles = array();
         $patents = $inventor->getPatents();
@@ -42,8 +43,8 @@ class KeywordsExtractor {
             $var = str_replace($this->symbols, "", strtolower($title));
             $titleExploded = explode(" ", $var);
             foreach ($titleExploded as $value) {
-                if(!in_array($value, $this->notKeywords) && strlen($value) > 2){
-                    $keywords[] = $value;    
+                if (!in_array($value, $this->notKeywords) && strlen($value) > 2) {
+                    $keywords[] = $value;
                 }
             }
         }
@@ -53,7 +54,7 @@ class KeywordsExtractor {
         return $final;
     }
 
-    public function getKeywordsFromPatents($patents,$n=null)
+    public function getKeywordsFromPatents($patents, $n = null)
     {
         $data = array();
         $titles = array();
@@ -65,13 +66,13 @@ class KeywordsExtractor {
 
         $data = $this->fromTitlesToKeywords($titles);
 
-        if($n === null) {
+        if ($n === null) {
             $n = 100;
         }
         $motcles = array_slice($data, 0, $n);
 
         foreach ($motcles as $key => $value) {
-            if(intval($value) > 10) {
+            if (intval($value) > 10) {
                 $keywords[] = array('keyword' => $key, 'count' => $value);
             } else {
                 break;
@@ -80,4 +81,5 @@ class KeywordsExtractor {
 
         return $keywords;
     }
+
 }

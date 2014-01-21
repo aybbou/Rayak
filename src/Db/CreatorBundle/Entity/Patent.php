@@ -3,7 +3,6 @@
 namespace Db\CreatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Db\CreatorBundle\Entity\Applicant;
 use Db\CreatorBundle\Entity\Inventor;
 
@@ -16,6 +15,7 @@ use Db\CreatorBundle\Entity\Inventor;
  */
 class Patent
 {
+
     /**
      * @var integer
      *
@@ -51,25 +51,24 @@ class Patent
      * @ORM\Column(name="publicationDate", type="date")
      */
     private $publicationDate;
-    
-    /**
-    * @ORM\ManyToMany(targetEntity="Applicant", inversedBy="patents")
-    * @ORM\JoinTable(name="applicants_patents",
-    *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
-    *      inverseJoinColumns={@ORM\JoinColumn(name="applicant_id", referencedColumnName="fullName")}
-    *      )
-    */
-    private $applicants;
-    
-    /**
-    * @ORM\ManyToMany(targetEntity="Inventor", inversedBy="patents")
-    * @ORM\JoinTable(name="inventors_patents",
-    *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
-    *      inverseJoinColumns={@ORM\JoinColumn(name="inventor_id", referencedColumnName="fullName")}
-    *      )
-    */
-    private $inventors;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Applicant", inversedBy="patents")
+     * @ORM\JoinTable(name="applicants_patents",
+     *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="applicant_id", referencedColumnName="fullName")}
+     *      )
+     */
+    private $applicants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Inventor", inversedBy="patents")
+     * @ORM\JoinTable(name="inventors_patents",
+     *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="inventor_id", referencedColumnName="fullName")}
+     *      )
+     */
+    private $inventors;
 
     /**
      * Get id
@@ -90,7 +89,7 @@ class Patent
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
@@ -113,7 +112,7 @@ class Patent
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
-    
+
         return $this;
     }
 
@@ -136,7 +135,7 @@ class Patent
     public function setFillingDate($fillingDate)
     {
         $this->fillingDate = $fillingDate;
-    
+
         return $this;
     }
 
@@ -159,7 +158,7 @@ class Patent
     public function setPublicationDate($publicationDate)
     {
         $this->publicationDate = $publicationDate;
-    
+
         return $this;
     }
 
@@ -172,6 +171,7 @@ class Patent
     {
         return $this->publicationDate;
     }
+
     /**
      * Constructor
      */
@@ -180,7 +180,7 @@ class Patent
         $this->applicants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->inventors = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add applicants
      *
@@ -190,7 +190,7 @@ class Patent
     public function addApplicant(\Db\CreatorBundle\Entity\Applicant $applicants)
     {
         $this->applicants[] = $applicants;
-    
+
         return $this;
     }
 
@@ -223,7 +223,7 @@ class Patent
     public function addInventor(\Db\CreatorBundle\Entity\Inventor $inventors)
     {
         $this->inventors[] = $inventors;
-    
+
         return $this;
     }
 
@@ -256,7 +256,8 @@ class Patent
     public function setId($id)
     {
         $this->id = $id;
-    
+
         return $this;
     }
+
 }

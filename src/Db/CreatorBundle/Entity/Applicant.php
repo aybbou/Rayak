@@ -3,7 +3,6 @@
 namespace Db\CreatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Db\CreatorBundle\Entity\Patent;
 
 /**
@@ -21,19 +20,17 @@ class Applicant
      * @ORM\Column(name="fullName", type="string", length=255)
      */
     private $fullName;
-    
-    
+
     /**
-    * @ORM\ManyToMany(targetEntity="Patent", mappedBy="applicants")
-    */
+     * @ORM\ManyToMany(targetEntity="Patent", mappedBy="applicants")
+     */
     private $patents;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="applicants")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      */
     private $country;
-
 
     /**
      * Get id
@@ -54,7 +51,7 @@ class Applicant
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
-    
+
         return $this;
     }
 
@@ -67,6 +64,7 @@ class Applicant
     {
         return $this->fullName;
     }
+
     /**
      * Constructor
      */
@@ -74,7 +72,7 @@ class Applicant
     {
         $this->patents = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add patents
      *
@@ -84,7 +82,7 @@ class Applicant
     public function addPatent(\Db\CreatorBundle\Entity\Patent $patents)
     {
         $this->patents[] = $patents;
-    
+
         return $this;
     }
 
@@ -117,7 +115,7 @@ class Applicant
     public function setCountry(\Db\CreatorBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
@@ -130,4 +128,5 @@ class Applicant
     {
         return $this->country;
     }
+
 }
