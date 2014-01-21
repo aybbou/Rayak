@@ -5,11 +5,9 @@ namespace Db\LensBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
 
-    public function indexAction()
-    {
+    public function indexAction() {
         return $this->render('DbMainBundle:Default:index.html.twig', array(
                     'patent' => 'lens'
         ));
@@ -21,23 +19,19 @@ class DefaultController extends Controller
         $result = $repo->getTopXInventors(1);
         $inventor = $repo->findOneByFullName($result[0]["fullName"]);
         $keywords = $this->get('db.extractor')->getKeywordsOfInventor($inventor);
-
         return new JsonResponse($keywords);
     }
 
-    public function collabInventorsAction()
-    {
+    public function collabInventorsAction() {
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository("DbLensBundle:Inventor")->getInventorsCollabs();
 
         $response = new JsonResponse(array("links" => $data));
-
         return $response;
     }
 
-    public function inventorsCountryAction()
-    {
+    public function inventorsCountryAction() {
         $em = $this->getDoctrine()->getManager();
         $countries = $em->getRepository('DbLensBundle:Country')->findAll();
 
@@ -48,12 +42,10 @@ class DefaultController extends Controller
         }
 
         $response = new JsonResponse($data);
-
         return $response;
     }
 
-    public function keywordsAction()
-    {
+    public function keywordsAction() {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbLensBundle:Patent')->findAll();
 
@@ -65,12 +57,10 @@ class DefaultController extends Controller
         $data = $this->get('db.extractor')->getKeywordsFromPatents($patents, $n);
 
         $response = new JsonResponse($data);
-
         return $response;
     }
 
-    public function inventorsAction()
-    {
+    public function inventorsAction() {
         $em = $this->getDoctrine()->getManager();
 
         if (isset($_GET['c'])) {
@@ -88,12 +78,10 @@ class DefaultController extends Controller
             $data[] = array('name' => $key, 'count' => intval($inventor["num"]));
         }
         $response = new JsonResponse($data);
-
         return $response;
     }
 
-    public function evolutionAction()
-    {
+    public function evolutionAction() {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbLensBundle:Patent')->countPatentsByPubDate();
 
@@ -113,7 +101,6 @@ class DefaultController extends Controller
         }
 
         $response = new JsonResponse($final);
-
         return $response;
     }
 

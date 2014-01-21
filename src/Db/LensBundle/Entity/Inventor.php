@@ -21,12 +21,12 @@ class Inventor
      * @ORM\Column(name="fullName", type="string", length=255)
      */
     private $fullName;
-
+    
     /**
-     * @ORM\ManyToMany(targetEntity="Patent", mappedBy="inventors")
-     */
+    * @ORM\ManyToMany(targetEntity="Patent", mappedBy="inventors")
+    */
     private $patents;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="inventors")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
@@ -36,7 +36,7 @@ class Inventor
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -46,26 +46,25 @@ class Inventor
     /**
      * Set fullName
      *
-     * @param  string   $fullName
+     * @param string $fullName
      * @return Inventor
      */
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
-
+    
         return $this;
     }
 
     /**
      * Get fullName
      *
-     * @return string
+     * @return string 
      */
     public function getFullName()
     {
         return $this->fullName;
     }
-
     /**
      * Constructor
      */
@@ -73,17 +72,17 @@ class Inventor
     {
         $this->patents = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Add patents
      *
-     * @param  \Db\LensBundle\Entity\Patent $patents
+     * @param \Db\LensBundle\Entity\Patent $patents
      * @return Inventor
      */
     public function addPatent(\Db\LensBundle\Entity\Patent $patents)
     {
         $this->patents[] = $patents;
-
+    
         return $this;
     }
 
@@ -100,7 +99,7 @@ class Inventor
     /**
      * Get patents
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPatents()
     {
@@ -110,24 +109,23 @@ class Inventor
     /**
      * Set country
      *
-     * @param  \Db\LensBundle\Entity\Country $country
+     * @param \Db\LensBundle\Entity\Country $country
      * @return Inventor
      */
     public function setCountry(\Db\LensBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-
+    
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return \Db\LensBundle\Entity\Country
+     * @return \Db\LensBundle\Entity\Country 
      */
     public function getCountry()
     {
         return $this->country;
     }
-
 }

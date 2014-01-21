@@ -24,7 +24,7 @@ class Creator
     public function setConfig(array $config)
     {
         $this->config = $config;
-        if (!isset($config['bundle'], $config['patent'], $config['title'], $config['abstract'], $config['pubDate'], $config['filDate'], $config['inventor'], $config['name'], $config['country'], $config['applicant'])) {
+        if( !isset($config['bundle'], $config['patent'], $config['title'], $config['abstract'], $config['pubDate'], $config['filDate'], $config['inventor'], $config['name'], $config['country'], $config['applicant']) ) {
             throw new \Exception('A parameter is messing !');
         }
     }
@@ -57,7 +57,7 @@ class Creator
         $titleTag = $this->config['title'];
         $pubDateTag = $this->config['pubDate'];
         $filDateTag = $this->config['filDate'];
-        $bundle = $this->config['bundle'];
+        $bundle=  $this->config['bundle'];
 
         if ($idTag) {
             $id = (integer) $patent->getElementsByTagName('id')->item(0)->nodeValue;
@@ -79,7 +79,7 @@ class Creator
         $inventors = $this->getInventors($patent);
         $applicants = $this->getApplicants($patent);
 
-        $patent = $this->em->getRepository('Db' . $bundle . 'Bundle:Patent')->find($id);
+        $patent = $this->em->getRepository('Db'.$bundle.'Bundle:Patent')->find($id);
         if ($patent == null) {
             $patentClass = "\\Db\\{$bundle}Bundle\\Entity\\Patent";
             $patent = new $patentClass();
@@ -113,7 +113,6 @@ class Creator
         foreach ($inventors as $inventor) {
             $inventorsTab[] = $this->getInventor($inventor);
         }
-
         return $inventorsTab;
     }
 
@@ -121,21 +120,21 @@ class Creator
     {
         $nameTag = $this->config['name'];
         $countryTag = $this->config['country'];
-        $bundle = $this->config['bundle'];
+        $bundle=  $this->config['bundle'];
         $name = $inventor->getElementsByTagName($nameTag)->item(0)->nodeValue;
         $countryCode = $inventor->getElementsByTagName($countryTag)->item(0)->nodeValue;
         $countryCode = trim(strtolower($countryCode));
 
-        $inventor = $this->em->getRepository('Db' . $bundle . 'Bundle:Inventor')->find($name);
+        $inventor = $this->em->getRepository('Db'.$bundle.'Bundle:Inventor')->find($name);
         if ($inventor == null) {
-            $inventorClass = "\\Db\\{$bundle}Bundle\\Entity\\Inventor";
+            $inventorClass="\\Db\\{$bundle}Bundle\\Entity\\Inventor";
             $inventor = new $inventorClass();
             $inventor->setFullName($name);
         }
 
-        $country = $this->em->getRepository('Db' . $bundle . 'Bundle:Country')->find($countryCode);
+        $country = $this->em->getRepository('Db'.$bundle.'Bundle:Country')->find($countryCode);
         if ($country == null) {
-            $countryClass = "\\Db\\{$bundle}Bundle\\Entity\\Country";
+            $countryClass= "\\Db\\{$bundle}Bundle\\Entity\\Country";
             $country = new $countryClass();
             $country->setName($countryCode);
             $country->setCode($countryCode);
@@ -161,7 +160,6 @@ class Creator
         foreach ($applicants as $applicant) {
             $applicantsTab[] = $this->getApplicant($applicant);
         }
-
         return $applicantsTab;
     }
 
@@ -169,7 +167,7 @@ class Creator
     {
         $nameTag = $this->config['name'];
         $countryTag = $this->config['country'];
-        $bundle = $this->config['bundle'];
+        $bundle=  $this->config['bundle'];
         $name = strtolower($applicant->getElementsByTagName($nameTag)->item(0)->nodeValue);
         $countryCode = $applicant->getElementsByTagName($countryTag);
         if (is_object($countryCode)) {
@@ -189,17 +187,17 @@ class Creator
 
         $countryCode = trim(strtolower($countryCode));
 
-        $country = $this->em->getRepository('Db' . $bundle . 'Bundle:Country')->find($countryCode);
+        $country = $this->em->getRepository('Db'.$bundle.'Bundle:Country')->find($countryCode);
         if ($country == null) {
-            $countryClass = "\\Db\\{$bundle}Bundle\\Entity\\Country";
+            $countryClass= "\\Db\\{$bundle}Bundle\\Entity\\Country";
             $country = new $countryClass();
             $country->setName($countryCode);
             $country->setCode($countryCode);
         }
 
-        $applicant = $this->em->getRepository('Db' . $bundle . 'Bundle:Applicant')->find($name);
+        $applicant = $this->em->getRepository('Db'.$bundle.'Bundle:Applicant')->find($name);
         if ($applicant == null) {
-            $applicantClass = "\\Db\\{$bundle}Bundle\\Entity\\Applicant";
+            $applicantClass= "\\Db\\{$bundle}Bundle\\Entity\\Applicant";
             $applicant = new $applicantClass();
             $applicant->setFullName($name);
             $applicant->setCountry($country);

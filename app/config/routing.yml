@@ -5,3 +5,4 @@ db_lens:
 db_main:
     resource: "@DbMainBundle/Resources/config/routing.yml"
     prefix:   /
+

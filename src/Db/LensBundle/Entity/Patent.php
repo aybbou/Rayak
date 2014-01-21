@@ -3,6 +3,7 @@
 namespace Db\LensBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Db\LensBundle\Entity\Applicant;
 use Db\LensBundle\Entity\Inventor;
 
@@ -15,7 +16,6 @@ use Db\LensBundle\Entity\Inventor;
  */
 class Patent
 {
-
     /**
      * @var integer
      *
@@ -51,29 +51,30 @@ class Patent
      * @ORM\Column(name="publicationDate", type="date")
      */
     private $publicationDate;
-
+    
     /**
-     * @ORM\ManyToMany(targetEntity="Applicant", inversedBy="patents")
-     * @ORM\JoinTable(name="applicants_patents2",
-     *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="applicant_id", referencedColumnName="fullName")}
-     *      )
-     */
+    * @ORM\ManyToMany(targetEntity="Applicant", inversedBy="patents")
+    * @ORM\JoinTable(name="applicants_patents2",
+    *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
+    *      inverseJoinColumns={@ORM\JoinColumn(name="applicant_id", referencedColumnName="fullName")}
+    *      )
+    */
     private $applicants;
-
+    
     /**
-     * @ORM\ManyToMany(targetEntity="Inventor", inversedBy="patents")
-     * @ORM\JoinTable(name="inventors_patents2",
-     *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="inventor_id", referencedColumnName="fullName")}
-     *      )
-     */
+    * @ORM\ManyToMany(targetEntity="Inventor", inversedBy="patents")
+    * @ORM\JoinTable(name="inventors_patents2",
+    *      joinColumns={@ORM\JoinColumn(name="patent_id", referencedColumnName="id")},
+    *      inverseJoinColumns={@ORM\JoinColumn(name="inventor_id", referencedColumnName="fullName")}
+    *      )
+    */
     private $inventors;
+
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -83,20 +84,20 @@ class Patent
     /**
      * Set title
      *
-     * @param  string $title
+     * @param string $title
      * @return Patent
      */
     public function setTitle($title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -106,20 +107,20 @@ class Patent
     /**
      * Set abstract
      *
-     * @param  string $abstract
+     * @param string $abstract
      * @return Patent
      */
     public function setAbstract($abstract)
     {
         $this->abstract = $abstract;
-
+    
         return $this;
     }
 
     /**
      * Get abstract
      *
-     * @return string
+     * @return string 
      */
     public function getAbstract()
     {
@@ -129,20 +130,20 @@ class Patent
     /**
      * Set fillingDate
      *
-     * @param  \DateTime $fillingDate
+     * @param \DateTime $fillingDate
      * @return Patent
      */
     public function setFillingDate($fillingDate)
     {
         $this->fillingDate = $fillingDate;
-
+    
         return $this;
     }
 
     /**
      * Get fillingDate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getFillingDate()
     {
@@ -152,26 +153,25 @@ class Patent
     /**
      * Set publicationDate
      *
-     * @param  \DateTime $publicationDate
+     * @param \DateTime $publicationDate
      * @return Patent
      */
     public function setPublicationDate($publicationDate)
     {
         $this->publicationDate = $publicationDate;
-
+    
         return $this;
     }
 
     /**
      * Get publicationDate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getPublicationDate()
     {
         return $this->publicationDate;
     }
-
     /**
      * Constructor
      */
@@ -180,17 +180,17 @@ class Patent
         $this->applicants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->inventors = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Add applicants
      *
-     * @param  \Db\LensBundle\Entity\Applicant $applicants
+     * @param \Db\LensBundle\Entity\Applicant $applicants
      * @return Patent
      */
     public function addApplicant(\Db\LensBundle\Entity\Applicant $applicants)
     {
         $this->applicants[] = $applicants;
-
+    
         return $this;
     }
 
@@ -207,7 +207,7 @@ class Patent
     /**
      * Get applicants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getApplicants()
     {
@@ -217,13 +217,13 @@ class Patent
     /**
      * Add inventors
      *
-     * @param  \Db\LensBundle\Entity\Inventor $inventors
+     * @param \Db\LensBundle\Entity\Inventor $inventors
      * @return Patent
      */
     public function addInventor(\Db\LensBundle\Entity\Inventor $inventors)
     {
         $this->inventors[] = $inventors;
-
+    
         return $this;
     }
 
@@ -240,7 +240,7 @@ class Patent
     /**
      * Get inventors
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getInventors()
     {
@@ -250,14 +250,13 @@ class Patent
     /**
      * Set id
      *
-     * @param  integer $id
+     * @param integer $id
      * @return Patent
      */
     public function setId($id)
     {
         $this->id = $id;
-
+    
         return $this;
     }
-
 }

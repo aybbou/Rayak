@@ -13,7 +13,6 @@ use Db\CreatorBundle\Entity\Inventor;
  */
 class Country
 {
-
     /**
      * @var string
      *
@@ -27,12 +26,12 @@ class Country
      * @ORM\Column(name="code", type="string", length=5)
      */
     private $code;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="Inventor", mappedBy="country")
      */
     private $inventors;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="Applicant", mappedBy="country")
      */
@@ -41,20 +40,20 @@ class Country
     /**
      * Set name
      *
-     * @param  string  $name
+     * @param string $name
      * @return Country
      */
     public function setName($name)
     {
         $this->name = $name;
-
+    
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -64,26 +63,26 @@ class Country
     /**
      * Set code
      *
-     * @param  string  $code
+     * @param string $code
      * @return Country
      */
     public function setCode($code)
     {
         $this->code = $code;
-
+    
         return $this;
     }
 
     /**
      * Get code
      *
-     * @return string
+     * @return string 
      */
     public function getCode()
     {
         return $this->code;
     }
-
+    
     /**
      * Constructor
      */
@@ -96,13 +95,13 @@ class Country
     /**
      * Add inventors
      *
-     * @param  \Db\CreatorBundle\Entity\Inventor $inventors
+     * @param \Db\CreatorBundle\Entity\Inventor $inventors
      * @return Country
      */
     public function addInventor(\Db\CreatorBundle\Entity\Inventor $inventors)
     {
         $this->inventors[] = $inventors;
-
+    
         return $this;
     }
 
@@ -119,7 +118,7 @@ class Country
     /**
      * Get inventors
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getInventors()
     {
@@ -129,13 +128,13 @@ class Country
     /**
      * Add applicants
      *
-     * @param  \Db\CreatorBundle\Entity\Applicant $applicants
+     * @param \Db\CreatorBundle\Entity\Applicant $applicants
      * @return Country
      */
     public function addApplicant(\Db\CreatorBundle\Entity\Applicant $applicants)
     {
         $this->applicants[] = $applicants;
-
+    
         return $this;
     }
 
@@ -152,11 +151,10 @@ class Country
     /**
      * Get applicants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getApplicants()
     {
         return $this->applicants;
     }
-
 }
