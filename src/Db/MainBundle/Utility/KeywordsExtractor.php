@@ -10,10 +10,10 @@ namespace Db\MainBundle\Utility;
 class KeywordsExtractor {
 
     private $notKeywords = array(
-        ' ', 'and', 'or', 'the', 'i', 'by',
-        'a', 'of', 'to', 'is', 'as', 'when', 'same',
-        'an', 'in', 'for', 'with', 'are', 'thereof',
-        'at', 'be', 'that', 'many', 'on', 'from');
+        ' ', 'and', 'or', 'the', 'i', 'by', 'methods', 'systems',
+        'a', 'of', 'to', 'is', 'as', 'when', 'same', 'using',
+        'an', 'in', 'for', 'with', 'are', 'thereof', 'devices',
+        'at', 'be', 'that', 'many', 'on', 'from', 'between', 'such');
     private $symbols = array('.', ',', '\\', '(', ')', '/', ';', ':');
 
     public function getKeywordsOfInventor($inventor, $number=20)
@@ -72,7 +72,7 @@ class KeywordsExtractor {
 
         foreach ($motcles as $key => $value) {
             if(intval($value) > 10) {
-                $keywords[] = array('keyword' => $key, 'count' => $value);
+                $keywords[] = array('keyword' => $key, 'count' => sqrt($value)*10);
             } else {
                 break;
             }
