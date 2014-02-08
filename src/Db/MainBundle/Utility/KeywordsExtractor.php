@@ -73,7 +73,7 @@ class KeywordsExtractor
 
         foreach ($motcles as $key => $value) {
             if (intval($value) > 10) {
-                $keywords[] = array('keyword' => $key, 'count' => $value);
+                $keywords[] = array('keyword' => $key, 'count' => $value/1.3);
             } else {
                 break;
             }
