@@ -5,9 +5,11 @@ namespace Db\LensBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->render('DbMainBundle:Default:index.html.twig', array(
                     'patent' => 'lens'
         ));
@@ -22,7 +24,8 @@ class DefaultController extends Controller {
         return new JsonResponse($keywords);
     }
 
-    public function collabInventorsAction() {
+    public function collabInventorsAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository("DbLensBundle:Inventor")->getInventorsCollabs();
@@ -31,7 +34,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function inventorsCountryAction() {
+    public function inventorsCountryAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $countries = $em->getRepository('DbLensBundle:Country')->findAll();
 
@@ -45,7 +49,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function keywordsAction() {
+    public function keywordsAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbLensBundle:Patent')->findAll();
 
@@ -60,7 +65,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function inventorsAction() {
+    public function inventorsAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         if (isset($_GET['c'])) {
@@ -81,7 +87,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    public function evolutionAction() {
+    public function evolutionAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $patents = $em->getRepository('DbLensBundle:Patent')->countPatentsByPubDate();
 

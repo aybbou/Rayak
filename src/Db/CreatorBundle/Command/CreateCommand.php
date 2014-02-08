@@ -12,16 +12,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author Ayyoub
  * @author Kaoutar
  */
-class CreateCommand extends ContainerAwareCommand {
+class CreateCommand extends ContainerAwareCommand
+{
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('db:create')
                 ->setDescription('Creates the database.')
                 ->addArgument('dbname')
                 ->addArgument('filePath');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
         $dbname = $input->getArgument('dbname');
         $filePath = $input->getArgument('filePath');
@@ -36,7 +39,8 @@ class CreateCommand extends ContainerAwareCommand {
         $output->writeln('Done! Have a nice day !');
     }
 
-    public function createLensDb(OutputInterface $output, $filePath) {
+    public function createLensDb(OutputInterface $output, $filePath)
+    {
         $output->writeln('Preparing the SQL query for PatentLens...');
         $lensCreator = $this->getContainer()->get('db_creator.creator');
         $lensCreator->setXmlFilePath($filePath);
@@ -56,7 +60,8 @@ class CreateCommand extends ContainerAwareCommand {
         $lensCreator->createDb();
     }
 
-    public function createFpoDb(OutputInterface $output, $filePath) {
+    public function createFpoDb(OutputInterface $output, $filePath)
+    {
         $output->writeln('Preparing the SQL query for FreePatentsOnline...');
         $creator = $this->getContainer()->get('db_creator.creator');
         $creator->setXmlFilePath($filePath);

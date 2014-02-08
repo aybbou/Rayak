@@ -21,12 +21,12 @@ class Inventor
      * @ORM\Column(name="fullName", type="string", length=255)
      */
     private $fullName;
-    
+
     /**
-    * @ORM\ManyToMany(targetEntity="Patent", mappedBy="inventors")
-    */
+     * @ORM\ManyToMany(targetEntity="Patent", mappedBy="inventors")
+     */
     private $patents;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="inventors")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
@@ -52,7 +52,7 @@ class Inventor
     public function setFullName($fullName)
     {
         $this->fullName = $fullName;
-    
+
         return $this;
     }
 
@@ -65,6 +65,7 @@ class Inventor
     {
         return $this->fullName;
     }
+
     /**
      * Constructor
      */
@@ -72,7 +73,7 @@ class Inventor
     {
         $this->patents = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add patents
      *
@@ -82,7 +83,7 @@ class Inventor
     public function addPatent(\Db\CreatorBundle\Entity\Patent $patents)
     {
         $this->patents[] = $patents;
-    
+
         return $this;
     }
 
@@ -115,7 +116,7 @@ class Inventor
     public function setCountry(\Db\CreatorBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
@@ -128,4 +129,5 @@ class Inventor
     {
         return $this->country;
     }
+
 }
